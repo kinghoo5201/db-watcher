@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "(rd /s /q ./dist || rm -rf ./dist || webpack -w) && webpack -w",
-    "build": "(rd /s /q ./dist || rm -rf ./dist || webpack) && webpack",
+    "start": "(rd /s /q dist || rm -rf ./dist || webpack -w) && webpack -w",
+    "build": "(rd /s /q dist || rm -rf ./dist || webpack) && webpack",
     "commit": "git add . && git commit -m \"auto commit with shell\" && ( ( git pull && git push && echo \"提交成功\" )|| ( git reset HEAD && echo \"pull错误，已重置\" ) )",
     "pub": "dbees-pub pub",
     "postpub": "npm publish"
