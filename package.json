@@ -1,12 +1,24 @@
 {
   "name": "db-watcher",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "监控前端错误及请求",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "(rd /s /q ./dist || rm -rf ./dist || webpack -w) && webpack -w",
+    "commit": "git add . && git commit -m \"auto commit with shell\" && ( ( git pull && git push && echo \"提交成功\" )|| ( git reset HEAD && echo \"pull错误，已重置\" ) )",
+    "pub": "dbees-pub pub",
+    "post-publish": "npm publish"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "dbees-pub": "^1.4.0",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.2",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  },
+  "typings": "index.d.ts"
 }
