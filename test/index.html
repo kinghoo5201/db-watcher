@@ -11,30 +11,8 @@
   </head>
   <body>
     <script>
-      /**
-        * @param {String}    event         监听事件
-        * @param {function}  function      出错文件
-        * @param {Boolean}   useCapture    指定事件是否在捕获或冒泡阶段执行。
-        *        true - 事件句柄在捕获阶段执行
-        *        false- false- 默认。事件句柄在冒泡阶段执行
-        */
-      window.addEventListener('error', (error) => {
-        console.log('我知道 404 错误了');
-        console.log(
-          error
-        );
-        return true;
-      }, true);
-      
-      window.addEventListener('unhandledrejection', function(err) {
-        console.log(err);
-      });
-
-      new Promise(function(resolve, reject) {
-        reject(new Error('haha'))
-      });
-      
-      </script>
-      <img src="./404.png" alt="">
+      const dw = new DbWatcher();
+      window.console.log(dw);
+    </script>
   </body>
 </html>
