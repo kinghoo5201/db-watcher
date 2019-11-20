@@ -1,31 +1,9 @@
+import * as _ from 'lodash';
+import { def } from './types';
+
 /** 获取设备信息 */
 export function getDevice() {
-  const device: {
-    /** 是否ios */
-    ios?: boolean;
-    /** 是否安卓 */
-    android?: boolean;
-    /** 是否iphone */
-    iphone?: boolean;
-    /** 是否ipad */
-    ipad?: boolean;
-    /** 是否安卓chrome */
-    androidChrome?: boolean;
-    /** 是否微信 */
-    isWeixin?: boolean;
-    /** 是否基于webView渲染 */
-    webView?: RegExpMatchArray;
-    /** 系统 */
-    os?: string;
-    /** 设备名 */
-    deviceName?: string;
-    /** 系统版本 */
-    osVersion?: string;
-    /** 浏览器名 */
-    browserName?: string;
-    /** 浏览器版本 */
-    browserVersion?: string;
-  } = {};
+  const device: def.commonInfo.IDeviceInfo = {};
   const ua = navigator.userAgent;
   const android = ua.match(/(Android);?[\s\/]+([\d.]+)?/);
   const ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
@@ -134,4 +112,15 @@ export function getDevice() {
 
   // Export object
   return device;
+}
+
+export function restFulParam(param: any, sep: string = '&'): string {
+  if (_.isObject(param) && !_.isEmpty(param)) {
+    const parArr: string[] = [];
+    Object.keys(param).forEach(key => {
+      parArr.push(`${key}=${param[key]}`);
+    });
+    return parArr.join(sep);
+  }
+  return '';
 }
