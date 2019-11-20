@@ -47,5 +47,6 @@ export class DbWatcher {
     img.addEventListener('abort', errFn);
     img.addEventListener('cancel', errFn);
     img.addEventListener('error', errFn);
+    //
   };
 }
