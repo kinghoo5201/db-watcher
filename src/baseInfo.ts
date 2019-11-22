@@ -1,10 +1,15 @@
 export const monitorType = {
   /** 语法报错 */
-  syntaxError: 'syntaxError',
+  syntaxWatcher: 'syntaxWatcher',
   /** 请求报错 */
-  requestError: 'requestError',
+  requestWatcher: 'requestWatcher',
   /** 点击信息 */
-  clickInfo: 'clickInfo',
+  clickWatcher: 'clickWatcher',
   /** 静态资源错误 */
-  staticError: 'staticError'
+  staticWatcher: 'staticWatcher'
+};
+
+export const ajaxEventType = {
+  ajaxLoadStart: 'ajaxLoadStart',
+  ajaxLoadEnd: 'ajaxLoadStart'
 };

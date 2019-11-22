@@ -1,5 +1,5 @@
 export declare namespace def {
-  namespace commonInfo {
+  export namespace commonInfo {
     /** 设备信息 */
     export type IDeviceInfo = {
       /** 是否ios */
@@ -30,10 +30,10 @@ export declare namespace def {
 
     /** 错误类型 */
     export type IErrorType =
-      | 'syntaxError'
-      | 'requestError'
-      | 'clickInfo'
-      | 'staticError';
+      | 'syntaxWatcher'
+      | 'requestWatcher'
+      | 'clickWatcher'
+      | 'staticWatcher';
 
     /** 通用参数生成 */
     export type ICommonPram = {
@@ -62,5 +62,9 @@ export declare namespace def {
       /** 错误信息 */
       errorMessage?: string;
     };
+  }
+  /** 函数类型 */
+  export namespace fn {
+    export type IEventCallback = (val?: commonInfo.ICommonPram) => void;
   }
 }

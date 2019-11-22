@@ -12,13 +12,6 @@
     <script>
       const dw = new DbWatcher();
     </script>
-    <script>
-      // worker test
-      const myWorker = new Worker('/test/worker.js');
-      myWorker.postMessage('hello');
-      myWorker.onmessage = function(e) {
-        console.log('parent received::', e);
-      };
-    </script>
+    <script></script>
   </body>
 </html>

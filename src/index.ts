@@ -1,3 +1,4 @@
+import requestWatcher from './request';
 import { getDevice, restFulParam } from './util';
 import { def } from './types';
 
@@ -7,6 +8,9 @@ export class DbWatcher {
 
   /** 上报地址 */
   public reporterUrl: string = 'http://localhost:2048/cxxc';
+
+  /** 监听器 */
+  public watchers = { requestWatcher };
 
   constructor() {}
 
