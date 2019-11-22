@@ -124,3 +124,27 @@ export function restFulParam(param: any, sep: string = '&'): string {
   }
   return '';
 }
+
+/** 用户行为监控 */
+export function recordBehavior() {
+  // 记录用户点击元素的行为数据
+  document.onclick = function (e:any) {
+    var className = "";
+    var placeholder = "";
+    var inputValue = "";
+    var tagName = e.target.tagName;
+    var innerText = "";
+    if (e.target.tagName != "svg" && e.target.tagName != "use") {
+      className = e.target.className;
+      placeholder = e.target.placeholder || "";
+      inputValue = e.target.value || "";
+      innerText = e.target.innerText ? e.target.innerText.replace(/\s*/g, "") : "";
+      // 如果点击的内容过长，就截取上传
+      if (innerText.length > 200) innerText = innerText.substring(0, 100) + "... ..." + innerText.substring(innerText.length - 99, innerText.length - 1);
+      innerText = innerText.replace(/\s/g, '');
+    }
+    console.log('e',e);
+    console.log({ type:"click", className, placeholder, inputValue, tagName, innerText});
+    // return { type:"click", className, placeholder, inputValue, tagName, innerText};
+  }
+}

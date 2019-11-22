@@ -1,4 +1,4 @@
-import { getDevice, restFulParam } from './util';
+import { getDevice, restFulParam, recordBehavior } from './util';
 import { def } from './types';
 
 export class DbWatcher {
@@ -8,7 +8,9 @@ export class DbWatcher {
   /** 上报地址 */
   public reporterUrl: string = 'http://localhost:2048/cxxc';
 
-  constructor() {}
+  constructor() {
+    recordBehavior();
+  }
 
   /** 通用信息生成 */
   public setCommonProperty = (monitorType: def.commonInfo.IErrorType) => {
