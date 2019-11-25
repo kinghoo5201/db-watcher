@@ -1,6 +1,6 @@
 
 import requestWatcher from './request';
-import { getDevice, restFulParam, recordBehavior } from './util';
+import { getDevice, restFulParam, recordBehavior, recordJavaScriptError } from './util';
 import { def } from './types';
 
 export class DbWatcher {
@@ -15,6 +15,7 @@ export class DbWatcher {
 
   constructor() {
     recordBehavior();
+    recordJavaScriptError();
   }
 
   /** 通用信息生成 */
