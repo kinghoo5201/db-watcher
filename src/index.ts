@@ -1,29 +1,85 @@
+import * as _ from 'lodash';
 import requestWatcher from './request';
-import { getDevice, restFulParam } from './util';
+import { restFulParam, DEVICE_INFO } from './util';
 import { def } from './types';
 
 export class DbWatcher {
-  /** 设备信息 */
-  public DEVICE_INFO = getDevice();
-
   /** 上报地址 */
-  public reporterUrl: string = 'http://localhost:2048/cxxc';
+  public reporterUrl: string = '';
+
+  /** 上报函数 */
+  public reporter?: (data: def.commonInfo.ICommonPram) => void = null;
 
   /** 监听器 */
   public watchers = { requestWatcher };
 
-  constructor() {}
+  /** 配置 */
+  public config: def.modules.index.IConfig = {
+    clickWatcher: true,
+    requestWatcher: true,
+    staticWatcher: true,
+    syntaxWatcher: true
+  };
+
+  constructor(
+    reporter: string | def.modules.index.reportCfg,
+    config?: def.modules.index.IConfig
+  ) {
+    if (config) {
+      this.config = config;
+    }
+    if (_.isString(reporter)) {
+      this.reporterUrl = reporter;
+    } else {
+      /** 自定义上报函数，就没必要配置上报地址了 */
+      this.reporter = reporter;
+    }
+    this.install();
+  }
+
+  /** 安装相应功能 */
+  public install() {
+    Object.keys(this.watchers).forEach(key => {
+      if (this.config[key]) {
+        this.watchers[key](this.recordReceiver);
+      }
+    });
+  }
 
   /** 通用信息生成 */
   public setCommonProperty = (monitorType: def.commonInfo.IErrorType) => {
     const result: def.commonInfo.ICommonPram = {
       time: Date.now(),
-      browserName: this.DEVICE_INFO.browserName,
-      browserVersion: this.DEVICE_INFO.browserVersion,
-      deviceName: this.DEVICE_INFO.deviceName,
+      browserName: DEVICE_INFO.browserName,
+      browserVersion: DEVICE_INFO.browserVersion,
+      deviceName: DEVICE_INFO.deviceName,
       monitorType
     };
     return result;
+  };
+
+  /** 接收器 */
+  public recordReceiver = (data: def.commonInfo.ICommonPram) => {
+    let dt = data;
+    if (
+      !_.isBoolean(this.config) &&
+      !_.isEmpty(this.config[data.monitorType])
+    ) {
+      const config: any = this.config[data.monitorType];
+      // 是否上报
+      const shouldReported: boolean = config.shouldReport
+        ? config.shouldReport(data)
+        : true;
+      if (!shouldReported) {
+        return;
+      }
+      dt = config.filter ? config.filter(data) : data;
+      if (this.reporter) {
+        this.reporter(dt);
+        return;
+      }
+    }
+    this.defaultReporter(dt);
   };
 
   /** 默认上报请求 */

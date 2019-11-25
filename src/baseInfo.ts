@@ -1,4 +1,6 @@
-export const monitorType = {
+import { def } from './types';
+
+export const monitorType: { [propName: string]: def.commonInfo.IErrorType } = {
   /** 语法报错 */
   syntaxWatcher: 'syntaxWatcher',
   /** 请求报错 */
@@ -11,5 +13,6 @@ export const monitorType = {
 
 export const ajaxEventType = {
   ajaxLoadStart: 'ajaxLoadStart',
-  ajaxLoadEnd: 'ajaxLoadStart'
+  ajaxLoadEnd: 'ajaxLoadEnd',
+  ajaxLoadError: 'ajaxLoadError'
 };
