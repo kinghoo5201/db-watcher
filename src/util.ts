@@ -114,6 +114,8 @@ export function getDevice() {
   return device;
 }
 
+export const DEVICE_INFO = getDevice();
+
 export function restFulParam(param: any, sep: string = '&'): string {
   if (_.isObject(param) && !_.isEmpty(param)) {
     const parArr: string[] = [];

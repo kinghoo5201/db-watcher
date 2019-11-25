@@ -38,19 +38,21 @@ export declare namespace def {
     /** 通用参数生成 */
     export type ICommonPram = {
       /** 上报时间 */
-      time: string | number;
+      time?: string | number;
       /** 监控类型,语法错误|请求监控|点击监控|静态资源请求 */
-      monitorType: IErrorType;
+      monitorType?: IErrorType;
       /** 请求类型 */
-      requestType?: string;
+      requestMethod?: string;
       /** 设备名 */
-      deviceName: string;
+      deviceName?: string;
       /** 浏览器名 */
-      browserName: string;
+      browserName?: string;
       /** 浏览器版本 */
-      browserVersion: string;
+      browserVersion?: string;
+      /** 页面url */
+      pageUrl?: string;
       /** 接口url */
-      url?: string;
+      requestUrl?: string;
       /** 请求参数 JSON.stringify处理参数 */
       requestParams?: string;
       /** 请求code */
@@ -63,6 +65,57 @@ export declare namespace def {
       errorMessage?: string;
     };
   }
+
+  /** 分模块类型 */
+  export namespace modules {
+    /** 主模块构造函数参数 */
+    export namespace index {
+      /** 通用配置 */
+      export type IDefaultCfg = {
+        /** 数据过滤器 */
+        filter?: (data: commonInfo.ICommonPram) => commonInfo.ICommonPram;
+        /** 是否上报 */
+        shouldReport?: (data: commonInfo.ICommonPram) => boolean;
+      };
+      export interface ISynTaxWatcher extends IDefaultCfg {}
+      export interface IRequestWatcher extends IDefaultCfg {}
+      export interface IClickWatcher extends IDefaultCfg {}
+      export interface IStaticWatcher extends IDefaultCfg {}
+      /** reqport配置 */
+      export type reportCfg = (data: commonInfo.ICommonPram) => void;
+      /** 配置 */
+      export type IConfig = {
+        /** 语法报错监控 */
+        syntaxWatcher?: ISynTaxWatcher | boolean;
+        /** 请求监控 */
+        requestWatcher?: IRequestWatcher | boolean;
+        /** 点击事件监控 */
+        clickWatcher?: IClickWatcher | boolean;
+        /** 静态资源监控 */
+        staticWatcher?: IStaticWatcher | boolean;
+      };
+    }
+
+    /** request 模块下的类型定义 */
+    export namespace request {
+      /** 配置event的detail */
+      export interface IEventWithDetail<T> extends Event {
+        detail: T;
+      }
+      /** 事件记录项 */
+      export type ITimeRecord = {
+        /** 时间戳 */
+        timestamp: number | string;
+        /** 事件对象 */
+        event: IEventWithDetail<XMLHttpRequest>;
+        /** 当前url */
+        pageUrl: string;
+        /** 是否上传完毕 */
+        uploadFlag: boolean;
+      };
+    }
+  }
+
   /** 函数类型 */
   export namespace fn {
     export type IEventCallback = (val?: commonInfo.ICommonPram) => void;
