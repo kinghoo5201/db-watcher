@@ -130,62 +130,92 @@ export function restFulParam(param: any, sep: string = '&'): string {
 /** 用户行为监控 */
 export function recordBehavior() {
   // 记录用户点击元素的行为数据
-  document.onclick = function (e:any) {
-    var className = "";
-    var placeholder = "";
-    var inputValue = "";
+  document.onclick = function(e: any) {
+    var className = '';
+    var placeholder = '';
+    var inputValue = '';
     var tagName = e.target.tagName;
-    var innerText = "";
-    if (e.target.tagName != "svg" && e.target.tagName != "use") {
+    var innerText = '';
+    if (e.target.tagName != 'svg' && e.target.tagName != 'use') {
       className = e.target.className;
-      placeholder = e.target.placeholder || "";
-      inputValue = e.target.value || "";
-      innerText = e.target.innerText ? e.target.innerText.replace(/\s*/g, "") : "";
+      placeholder = e.target.placeholder || '';
+      inputValue = e.target.value || '';
+      innerText = e.target.innerText
+        ? e.target.innerText.replace(/\s*/g, '')
+        : '';
       // 如果点击的内容过长，就截取上传
-      if (innerText.length > 200) innerText = innerText.substring(0, 100) + "... ..." + innerText.substring(innerText.length - 99, innerText.length - 1);
+      if (innerText.length > 200)
+        innerText =
+          innerText.substring(0, 100) +
+          '... ...' +
+          innerText.substring(innerText.length - 99, innerText.length - 1);
       innerText = innerText.replace(/\s/g, '');
     }
-    console.log('e',e);
-    console.log({ type:"click", className, placeholder, inputValue, tagName, innerText});
+    console.log('e', e);
+    console.log({
+      type: 'click',
+      className,
+      placeholder,
+      inputValue,
+      tagName,
+      innerText
+    });
     // return { type:"click", className, placeholder, inputValue, tagName, innerText};
-  }
+  };
 }
 
-
-function siftAndMakeUpMessage(infoType, origin_errorMsg, origin_lineNumber, origin_columnNumber, origin_errorObj) {
+function siftAndMakeUpMessage(
+  infoType,
+  origin_errorMsg,
+  origin_lineNumber,
+  origin_columnNumber,
+  origin_errorObj
+) {
   // 记录js错误前，检查一下url记录是否变化
   // checkUrlChange();
   var errorMsg = origin_errorMsg ? origin_errorMsg : '';
   var errorObj = origin_errorObj ? origin_errorObj : '';
-  var errorType = "";
+  var errorType = '';
   if (errorMsg) {
     if (typeof errorObj === 'string') {
-      errorType = errorObj.split(": ")[0].replace('"', "");
+      errorType = errorObj.split(': ')[0].replace('"', '');
     } else {
-      var errorStackStr = JSON.stringify(errorObj)
-      errorType = errorStackStr.split(": ")[0].replace('"', "");
+      var errorStackStr = JSON.stringify(errorObj);
+      errorType = errorStackStr.split(': ')[0].replace('"', '');
     }
   }
 
-  window.console.log("error",infoType, errorType + ": " + errorMsg,);
+  window.console.log('error', infoType, errorType + ': ' + errorMsg);
   // var javaScriptErrorInfo = new JavaScriptErrorInfo(JS_ERROR, infoType, errorType + ": " + errorMsg, errorObj);
   // javaScriptErrorInfo.handleLogInfo(JS_ERROR, javaScriptErrorInfo);
-};
+}
 /**
  * 页面JS错误监控
  */
 export function recordJavaScriptError() {
   // 重写console.error, 可以捕获更全面的报错信息
   var oldError = console.error;
-  console.error = function (tempErrorMsg) {
+  console.error = function(tempErrorMsg) {
     var errorMsg = (arguments[0] && arguments[0].message) || tempErrorMsg;
     var lineNumber = 0;
     var columnNumber = 0;
     var errorObj = arguments[0] && arguments[0].stack;
     if (!errorObj) {
-      siftAndMakeUpMessage("console_error", errorMsg, lineNumber, columnNumber, "CustomizeError: " + errorMsg);
+      siftAndMakeUpMessage(
+        'console_error',
+        errorMsg,
+        lineNumber,
+        columnNumber,
+        'CustomizeError: ' + errorMsg
+      );
     } else {
-      siftAndMakeUpMessage("console_error", errorMsg, lineNumber, columnNumber, errorObj);
+      siftAndMakeUpMessage(
+        'console_error',
+        errorMsg,
+        lineNumber,
+        columnNumber,
+        errorObj
+      );
     }
     return oldError.apply(console, arguments);
   };
@@ -193,18 +223,24 @@ export function recordJavaScriptError() {
   window.onerror = function(errorMsg, url, lineNumber, columnNumber, errorObj) {
     // jsMonitorStarted = true;
     var errorStack = errorObj ? errorObj.stack : null;
-    siftAndMakeUpMessage("on_error", errorMsg, lineNumber, columnNumber, errorStack);
+    siftAndMakeUpMessage(
+      'on_error',
+      errorMsg,
+      lineNumber,
+      columnNumber,
+      errorStack
+    );
   };
   window.onunhandledrejection = function(e) {
-    var errorMsg = "";
-    var errorStack = "";
-    if (typeof e.reason === "object") {
+    var errorMsg = '';
+    var errorStack = '';
+    if (typeof e.reason === 'object') {
       errorMsg = e.reason.message;
       errorStack = e.reason.stack;
     } else {
       errorMsg = e.reason;
-      errorStack = "";
+      errorStack = '';
     }
-    siftAndMakeUpMessage("on_error", errorMsg, WEB_LOCATION, 0, 0, "UncaughtInPromiseError: " + errorStack);
-  }
-};
+    // siftAndMakeUpMessage("on_error", errorMsg, WEB_LOCATION, 0, 0, "UncaughtInPromiseError: " + errorStack);
+  };
+}

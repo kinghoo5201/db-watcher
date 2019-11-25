@@ -51,7 +51,7 @@ export declare namespace def {
       browserVersion?: string;
       /** 页面url */
       pageUrl?: string;
-      /** 接口url */
+      /** 接口url|静态资源地址 */
       requestUrl?: string;
       /** 请求参数 JSON.stringify处理参数 */
       requestParams?: string;

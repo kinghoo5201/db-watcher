@@ -1,5 +1,6 @@
 import * as _ from 'lodash';
 import requestWatcher from './request';
+import staticWatcher from './staticwatch';
 import {
   restFulParam,
   recordBehavior,
@@ -16,7 +17,7 @@ export class DbWatcher {
   public reporter?: (data: def.commonInfo.ICommonPram) => void = null;
 
   /** 监听器 */
-  public watchers = { requestWatcher };
+  public watchers = { requestWatcher, staticWatcher };
 
   /** 配置 */
   public config: def.modules.index.IConfig = {
