@@ -32,7 +32,6 @@ export declare namespace def {
     export type IErrorType =
       | 'syntaxWatcher'
       | 'requestWatcher'
-      | 'clickWatcher'
       | 'staticWatcher';
 
     /** 通用参数生成 */
@@ -79,7 +78,6 @@ export declare namespace def {
       };
       export interface ISynTaxWatcher extends IDefaultCfg {}
       export interface IRequestWatcher extends IDefaultCfg {}
-      export interface IClickWatcher extends IDefaultCfg {}
       export interface IStaticWatcher extends IDefaultCfg {}
       /** reqport配置 */
       export type reportCfg = (data: commonInfo.ICommonPram) => void;
@@ -89,8 +87,6 @@ export declare namespace def {
         syntaxWatcher?: ISynTaxWatcher | boolean;
         /** 请求监控 */
         requestWatcher?: IRequestWatcher | boolean;
-        /** 点击事件监控 */
-        clickWatcher?: IClickWatcher | boolean;
         /** 静态资源监控 */
         staticWatcher?: IStaticWatcher | boolean;
       };

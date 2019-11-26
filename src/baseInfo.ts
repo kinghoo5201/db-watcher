@@ -5,8 +5,6 @@ export const monitorType: { [propName: string]: def.commonInfo.IErrorType } = {
   syntaxWatcher: 'syntaxWatcher',
   /** 请求报错 */
   requestWatcher: 'requestWatcher',
-  /** 点击信息 */
-  clickWatcher: 'clickWatcher',
   /** 静态资源错误 */
   staticWatcher: 'staticWatcher'
 };

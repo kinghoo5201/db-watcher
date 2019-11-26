@@ -1,12 +1,8 @@
 import * as _ from 'lodash';
 import requestWatcher from './request';
 import staticWatcher from './staticwatch';
-import {
-  restFulParam,
-  recordBehavior,
-  recordJavaScriptError,
-  DEVICE_INFO
-} from './util';
+import syntaxWatcher from './syntaxWatcher';
+import { restFulParam, DEVICE_INFO } from './util';
 import { def } from './types';
 
 export class DbWatcher {
@@ -17,11 +13,10 @@ export class DbWatcher {
   public reporter?: (data: def.commonInfo.ICommonPram) => void = null;
 
   /** 监听器 */
-  public watchers = { requestWatcher, staticWatcher };
+  public watchers = { requestWatcher, staticWatcher, syntaxWatcher };
 
   /** 配置 */
   public config: def.modules.index.IConfig = {
-    clickWatcher: true,
     requestWatcher: true,
     staticWatcher: true,
     syntaxWatcher: true
@@ -41,8 +36,6 @@ export class DbWatcher {
       this.reporter = reporter;
     }
     this.install();
-    recordBehavior();
-    recordJavaScriptError();
   }
 
   /** 安装相应功能 */
