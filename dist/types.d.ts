@@ -32,7 +32,7 @@ export declare namespace def {
         /** 通用参数生成 */
         type ICommonPram = {
             /** 上报时间 */
-            time?: string | number;
+            reporterTime?: string | number;
             /** 监控类型,语法错误|请求监控|点击监控|静态资源请求 */
             monitorType?: IErrorType;
             /** 请求类型 */
@@ -52,7 +52,7 @@ export declare namespace def {
             /** 请求code */
             requestCode?: number;
             /** 捕获的信息,或者数据 JSON.stringify处理 */
-            value?: string;
+            monitorVal?: string;
             /** 错误类型 */
             errorType?: string;
             /** 错误信息 */

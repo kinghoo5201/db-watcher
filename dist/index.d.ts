@@ -18,8 +18,6 @@ export declare class DbWatcher {
     constructor(reporter: string | def.modules.index.reportCfg, config?: def.modules.index.IConfig);
     /** 安装相应功能 */
     install(): void;
-    /** 通用信息生成 */
-    setCommonProperty: (monitorType: def.commonInfo.IErrorType) => def.commonInfo.ICommonPram;
     /** 接收器 */
     recordReceiver: (data: def.commonInfo.ICommonPram) => void;
     /** 默认上报请求 */
