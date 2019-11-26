@@ -47,18 +47,6 @@ export class DbWatcher {
     });
   }
 
-  /** 通用信息生成 */
-  public setCommonProperty = (monitorType: def.commonInfo.IErrorType) => {
-    const result: def.commonInfo.ICommonPram = {
-      time: Date.now(),
-      browserName: DEVICE_INFO.browserName,
-      browserVersion: DEVICE_INFO.browserVersion,
-      deviceName: DEVICE_INFO.deviceName,
-      monitorType
-    };
-    return result;
-  };
-
   /** 接收器 */
   public recordReceiver = (data: def.commonInfo.ICommonPram) => {
     let dt = data;

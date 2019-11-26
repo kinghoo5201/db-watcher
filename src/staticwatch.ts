@@ -15,7 +15,7 @@ export default function(callback?: def.fn.IEventCallback) {
         const isScript = localName === 'script';
         const sourceUrl = _.get(e, `target.${isScript ? 'src' : 'href'}`, '');
         const result: def.commonInfo.ICommonPram = {
-          time: Date.now(),
+          reporterTime: Date.now(),
           monitorType: monitorType.staticWatcher,
           browserName: DEVICE_INFO.browserName,
           browserVersion: DEVICE_INFO.browserVersion,

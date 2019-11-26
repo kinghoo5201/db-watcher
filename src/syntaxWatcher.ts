@@ -17,7 +17,7 @@ export default function(callback?: def.fn.IEventCallback) {
     function(e) {
       if (!_.get(e, 'target.localName', '')) {
         const errorRst: def.commonInfo.ICommonPram = {
-          time: Date.now(),
+          reporterTime: Date.now(),
           pageUrl: window.location.href,
           errorType: e.error.message.split(':')[0],
           errorMessage: e.error.stack
@@ -38,7 +38,7 @@ export default function(callback?: def.fn.IEventCallback) {
         return;
       }
       const errorRst: def.commonInfo.ICommonPram = {
-        time: Date.now(),
+        reporterTime: Date.now(),
         pageUrl: window.location.href,
         errorType: 'Promise rejected',
         errorMessage:

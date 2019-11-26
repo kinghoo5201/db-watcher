@@ -47,7 +47,7 @@ export default function(callback?: def.fn.IEventCallback) {
 
   function handleHttpResult(timeRecord: def.modules.request.ITimeRecord) {
     const result: def.commonInfo.ICommonPram = {
-      time: timeRecord.timestamp,
+      reporterTime: timeRecord.timestamp,
       monitorType: monitorType.requestWatcher,
       requestMethod: (timeRecord as any).event.detail.requestMethod,
       deviceName: DEVICE_INFO.deviceName,
@@ -104,7 +104,7 @@ export default function(callback?: def.fn.IEventCallback) {
       let opt: RequestInit = _.isString(input) ? init : input;
       let requestUrl = _.isString(input) ? input : input.url;
       const result: def.commonInfo.ICommonPram = {
-        time: Date.now(),
+        reporterTime: Date.now(),
         monitorType: monitorType.requestWatcher,
         browserName: DEVICE_INFO.browserName,
         browserVersion: DEVICE_INFO.browserVersion,
